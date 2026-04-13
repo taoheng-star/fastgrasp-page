@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>FastGrasp</title>
+    <!-- 使用简洁现代的风格，参考学术类项目主页常见布局 -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f5f7fb;   /* 柔和学术背景 */
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            line-height: 1.5;
+            color: #1e293b;
+            padding: 2rem 1.5rem;
+        }
+
+        /* 优雅卡片容器，模拟论文首页的简洁感 */
+        .paper-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 32px;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.02);
+            overflow: hidden;
+            padding: 3rem 2rem 4rem;
+            transition: all 0.2s ease;
+        }
+
+        /* 顶部装饰线 — 增加学术感，并配合居中布局 */
+        .accent-line {
+            width: 80px;
+            height: 4px;
+            background: #3b82f6;
+            border-radius: 4px;
+            margin-bottom: 2rem;
+            margin-left: auto;
+            margin-right: auto;  /* 让装饰线居中，配合标题居中更协调 */
+        }
+
+        /* 标题区域 — 改为居中 */
+        .title-section {
+            margin-bottom: 2rem;
+            text-align: center;   /* 关键修改：标题整体居中 */
+        }
+        .project-title {
+            font-size: 2.25rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 0.75rem;
+        }
+
+        /* 副标题或简短描述（可选增强，但保持结构：标题，作者，单位） */
+        .subhead {
+            font-size: 1.1rem;
+            color: #475569;
+            border-left: 3px solid #94a3b8;
+            padding-left: 1rem;
+            margin-top: 0.5rem;
+            font-weight: 400;
+            /* 居中情况下若有副标题可选择居中，这里保持原有风格但让它在居中环境下也自然 */
+            text-align: left;
+            display: inline-block; /* 让边框仅包裹内容，居中对齐时仍维持视觉 */
+        }
+
+        /* 作者区域 */
+        .authors-section {
+            margin-bottom: 2rem;
+            padding: 1rem 0 0.5rem 0;
+            border-top: 1px solid #e9eef3;
+            border-bottom: 1px solid #e9eef3;
+        }
+
+        .authors-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            row-gap: 1rem;
+            margin: 1rem 0 0.75rem;
+        }
+
+        .author {
+            text-align: center;
+            min-width: 140px;
+        }
+
+        .author-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 0.25rem;
+        }
+
+        .author-affiliation {
+            font-size: 0.85rem;
+            color: #5b6e8c;
+            font-weight: 450;
+        }
+
+        /* 单位 / 机构区域 */
+        .institution-section {
+            margin-top: 0.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            background: #f8fafc;
+            border-radius: 24px;
+            padding: 1.25rem 1.5rem;
+        }
+
+        .institution-block {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            align-items: baseline;
+        }
+
+        .institution {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #1e293b;
+            background: white;
+            padding: 0.4rem 1.2rem;
+            border-radius: 40px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+            border: 1px solid #e2e8f0;
+        }
+
+        .inst-name {
+            font-weight: 600;
+            color: #075985;
+        }
+
+        .inst-dept {
+            font-size: 0.85rem;
+            color: #475569;
+            margin-left: 6px;
+        }
+
+        /* 可选的摘要/简介区域 — 增加学术完整性，但不干扰从上到下顺序 */
+        .abstract {
+            margin-top: 2rem;
+            background: #fefce8;
+            border-radius: 24px;
+            padding: 1.5rem;
+            border: 1px solid #fde04730;
+        }
+        .abstract h3 {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 600;
+            color: #854d0e;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .abstract p {
+            color: #3f3a1f;
+            line-height: 1.6;
+        }
+
+
+        .sim {
+            margin-top: 4.5rem;
+            border-radius: 24px;
+        }
+        .sim h3 {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #854d0e;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .sim video {
+            display: block;
+            margin: 0 auto;
+            border-radius: 12px;
+        }
+
+
+        .real {
+            margin-top: 4.5rem;
+            border-radius: 24px;
+        }
+        .real h3 {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #854d0e;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .real h4 {
+            text-align: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #854d0e;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        /* 【关键修改】视频容器 - 使用 flexbox 实现每行两个视频 */
+        .real .video-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        /* 每个视频项 */
+        .real .video-item {
+            flex: 1 1 calc(50% - 1.5rem);
+            min-width: 280px;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .real video {
+            display: block;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+
+        
+        /* 底部项目信息 (不影响主要层级) */
+        .footer-note {
+            margin-top: 3rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #94a3b8;
+            border-top: 1px solid #ecf3fa;
+            padding-top: 2rem;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 700px) {
+            body {
+                padding: 1rem;
+            }
+            .paper-container {
+                padding: 2rem 1.25rem 3rem;
+            }
+            .project-title {
+                font-size: 2rem;
+            }
+            .authors-list {
+                gap: 1.2rem;
+            }
+            .author-name {
+                font-size: 1.1rem;
+            }
+            .institution-block {
+                gap: 0.8rem;
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            /* 小屏幕时每行显示一个视频 */
+            .real .video-item {
+                flex: 1 1 100%;
+            }
+        }
+
+        /* 模拟简洁链接和鼠标效果 */
+        a {
+            text-decoration: none;
+        }
+
+        .badge {
+            background: #eef2ff;
+            color: #1e40af;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+
+<div class="paper-container">
+    <!-- 顶部装饰线（突出学术调性）居中对齐 -->
+    <div class="accent-line"></div>
+
+    <!-- 1. 标题区域 - 已通过 .title-section 添加 text-align: center 实现标题居中 -->
+    <div class="title-section">
+        <h1 class="project-title">
+            FastGrasp: <br> Learning-based Whole-body Control method for Fast
+Dexterous Grasping with Mobile Manipulators
+        </h1>
+        <!-- 可选的副标题（注释掉以保持简洁，但保留结构） 
+        <div class="subhead">Real-time Whole-body Coordination for High-Speed Mobile Manipulation</div> -->
+    </div>
+
+    <!-- 2. 作者区域 (支持多个作者及其所属单位，符合学术惯例) -->
+    <div class="authors-section">
+        <div class="authors-list">
+            <!-- 作者 1 -->
+            <div class="author">
+                <div class="author-name">Tao Heng<span class="badge">*</span></div>
+            </div>
+            <!-- 作者 2 -->
+            <div class="author">
+                <div class="author-name">Zhong Yiming <span class="badge">*</span></div>
+            </div>
+            <!-- 作者 3 -->
+            <div class="author">
+                <div class="author-name">Yang Zemin <span class="badge">*</span></div>
+            </div>
+            <!-- 作者 4 -->
+            <div class="author">
+                <div class="author-name">Ma Yuexin <span class="badge">†</span></div>
+            </div>
+        </div>
+        <div style="text-align: center; font-size: 0.75rem; color: #5b6e8c; margin-top: 8px;">
+            <span>* Equal contribution &nbsp;&nbsp; † Corresponding author</span>
+        </div>
+    </div>
+
+    <!-- 3. 单位 / 主要合作机构（突出合作单位/实验室） -->
+    <div class="institution-section">
+        <div class="institution-block">
+            <div class="institution">
+                <span class="inst-name">ShanghaiTech University</span>
+                <span class="inst-dept"> School of Information Science and Technology</span>
+                <span class="inst-dept"> 4DV Lab</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 附加摘要/简介区域: 保持学术项目主页的完整度，但主体标题-作者-单位已完整 -->
+    <div class="abstract">
+        <h3>Abstract</h3>
+        <p style="text-align: justify;">
+            Fast grasping is critical for mobile robots in logistics, manufacturing, and service applications. 
+            Existing methods face fundamental challenges in impact stabilization under high-speed motion, 
+            real-time whole-body coordination, and generalization across diverse objects and scenarios, 
+            limited by fixed bases, simple grippers, or slow tactile response capabilities. 
+            We propose FastGrasp, a learning-based framework that integrates grasp guidance, 
+            whole-body control, and tactile feedback for mobile fast grasping. 
+            Our two-stage reinforcement learning strategy first generates diverse grasp candidates via conditional variational autoencoder conditioned on object point clouds, 
+            then executes coordinated movements of mobile base, arm, and hand guided by optimal grasp selection. 
+            Tactile sensing enables real-time grasp adjustments to handle impact effects and object variations. 
+            Extensive experiments demonstrate superior grasping performance in both simulation and real-world scenarios, 
+            achieving robust manipulation across diverse object geometries through effective sim-to-real transfer.
+        </p>
+        <div style="display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap; justify-content: center;">
+            <span style="background:#e6f0ff; padding:4px 12px; border-radius:50px; font-size:0.75rem;">🔗 论文预印本 (arXiv)</span>
+            <span style="background:#e6f0ff; padding:4px 12px; border-radius:50px; font-size:0.75rem;">💻 开源代码</span>
+        </div>
+    </div>
+
+    <div class="real">
+        <img src="teaser.jpg" alt="teaser" style="width:100%; max-width:600px; display:block; margin:40px auto 0 auto; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+    </div>  
+
+    <div class="real">
+        <h3>Method</h3>
+        <p style="text-align: justify;">
+            FastGrasp adopts a two-stage strategy to achieve fast dexterous grasping for mobile manipulators: 
+            in the first stage, a conditional variational autoencoder (CVAE) conditioned on object point clouds generates diverse grasp candidates, 
+            and the optimal grasp guidance is selected based on hand envelopment metrics (GWC and GDC); 
+            in the second stage, this grasp guidance, together with real-time tactile feedback, 
+            is used to train a whole-body control policy via reinforcement learning (PPO), 
+            coordinating the mobile base, robotic arm, 
+            and dexterous hand to achieve stable grasping under high-speed motion while adapting to objects of varying shapes.
+        </p>
+        <img src="pipeline.jpg" alt="FastGrasp_pipeline" style="width:100%; max-width:600px; display:block; margin:40px auto 0 auto; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+    </div>    
+
+
+    <div class="sim">
+        <h3>Performance on Simulation Platform</h3>
+        <video width="480" height="245" controls>
+          <source src="sim.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <div class="real">
+        <h3>Performance on Real-World Platform</h3>
+        <h4>On tables of different heights</h4>
+        <div class="video-grid">
+            <div class="video-item">
+                <video controls>
+                    <source src="height1_e.mp4" type="video/mp4">
+                    您的浏览器不支持 video 标签。
+                </video>
+            </div>
+            <div class="video-item">
+                <video controls>
+                    <source src="height1_h.mp4" type="video/mp4">
+                    您的浏览器不支持 video 标签。
+                </video>
+            </div>
+        </div>
+        <div class="video-grid">
+            <div class="video-item">
+                <video controls>
+                    <source src="height2_e1.mp4" type="video/mp4">
+                    您的浏览器不支持 video 标签。
+                </video>
+            </div>
+            <div class="video-item">
+                <video controls>
+                    <source src="height2_e2.mp4" type="video/mp4">
+                    您的浏览器不支持 video 标签。
+                </video>
+            </div>
+        </div>
+        <div class="video-grid">
+            <div class="video-item">
+                <video controls>
+                    <source src="height3_h1.mp4" type="video/mp4">
+                    您的浏览器不支持 video 标签。
+                </video>
+            </div>
+            <div class="video-item">
+                <video controls>
+                    <source src="height3_h2.mp4" type="video/mp4">
+                    您的浏览器不支持 video 标签。
+                </video>
+            </div>
+        </div>
+    </div>
+
+    <div class="real">
+        <h3>Tactile Adaptation</h3>
+        <h4>(To improve display, the system response has been reduced.)</h4>
+        <div class="video-grid">
+            <div class="video-item">
+                <video controls>
+                    <source src="tighten1.mp4" type="video/mp4">
+                    您的浏览器不支持 video 标签。
+                </video>
+            </div>
+        </div>
+        <div class="video-grid">
+            <div class="video-item">
+                <video controls>
+                    <source src="tighten2.mp4" type="video/mp4">
+                    您的浏览器不支持 video 标签。
+                </video>
+            </div>
+            <div class="video-item">
+                <video controls>
+                    <source src="tighten3.mp4" type="video/mp4">
+                    您的浏览器不支持 video 标签。
+                </video>
+            </div>
+        </div>
+    </div>
+
+    <!-- 增加简单的footer信息（可保留学术风度） -->
+    <div class="footer-note">
+        FastGrasp Project Page ·  ShanghaiTech 4DV Lab
+    </div>
+
+</div>
+
+</body>
+</html>

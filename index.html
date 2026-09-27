@@ -360,9 +360,14 @@ Dexterous Grasping with Mobile Manipulators
     <div class="abstract">
         <h3>Abstract</h3>
         <p style="text-align: justify;">
-            Fast dexterous grasping while a mobile base remains in motion requires coordinated whole-body control and rapid adaptation to physical contact. We propose \textbf{FastGrasp}, a two-stage learning framework that integrates grasp guidance, whole-body control, and tactile feedback. First, a pretrained conditional variational autoencoder generates diverse grasp candidates from object point clouds. Candidates are filtered by approach direction and supporting-surface constraints, then ranked using an
-envelopment-based criterion combining grasp width and depth coverage measures. Second, a reinforcement learning policy jointly controls the mobile base, arm, and dexterous hand, using the selected grasp as guidance and tactile observations for online grasp adjustment. The policy is trained with domain randomization and deployed with command filtering and tactile-triggered grasp tightening. Simulation experiments show higher grasp success rates than
-the evaluated baselines under full and partial point-cloud observations, while real-world experiments demonstrate sim-to-real transfer across diverse object geometries.
+            Fast dexterous grasping while a mobile base remains in motion requires coordinated whole-body control and rapid adaptation to physical contact. We propose FastGrasp, 
+            a two-stage learning framework that integrates grasp guidance, whole-body control, and tactile feedback. 
+            First, a pretrained conditional variational autoencoder generates diverse grasp candidates from object point clouds. 
+            Candidates are filtered by approach direction and supporting-surface constraints, then ranked using an
+envelopment-based criterion combining grasp width and depth coverage measures. 
+            Second, a reinforcement learning policy jointly controls the mobile base, arm, and dexterous hand, using the selected grasp as guidance and tactile observations for online grasp adjustment. 
+            The policy is trained with domain randomization and deployed with command filtering and tactile-triggered grasp tightening. 
+            Simulation experiments show higher grasp success rates than the evaluated baselines under full and partial point-cloud observations, while real-world experiments demonstrate sim-to-real transfer across diverse object geometries.
         </p>
         <div style="display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap; justify-content: center;">
         <a href="https://arxiv.org/abs/2604.12879" target="_blank" rel="noopener noreferrer" style="background:#e6f0ff; padding:4px 12px; border-radius:50px; font-size:0.75rem; text-decoration:none; color:inherit;">
